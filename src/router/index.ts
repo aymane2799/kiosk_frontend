@@ -69,8 +69,30 @@ const router = createRouter({
         { path: '', name: ROUTE_NAMES.adminHome, redirect: { name: 'admin-tenants' } },
         {
           path: 'tenants',
-          name: ROUTE_NAMES.adminTenants,
-          component: () => import('@/features/admin/pages/AdminTenantsPage.vue'),
+          children: [
+            {
+              path: '',
+              name: ROUTE_NAMES.adminTenants,
+              component: () =>
+                import('@/features/admin/pages/admin-tenants-page/AdminTenantsPage.vue'),
+            },
+            {
+              path: 'create',
+              name: ROUTE_NAMES.adminCreateTenant,
+              component: () => import('@/features/admin/pages/AdminTenantFormPage.vue'),
+            },
+            {
+              path: ':tenantId',
+              name: ROUTE_NAMES.adminTenantDetail,
+              component: () =>
+                import('@/features/admin/pages/admin-tenant-detail-page/AdminTenantDetailPage.vue'),
+            },
+            {
+              path: ':tenantId/edit',
+              name: ROUTE_NAMES.adminUpdateTenant,
+              component: () => import('@/features/admin/pages/AdminTenantFormPage.vue'),
+            },
+          ],
         },
       ],
     },

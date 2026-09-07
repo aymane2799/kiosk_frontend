@@ -46,7 +46,7 @@ const tenantStore = useTenantStore()
 
       <ItemFooter>
         <span class="text-sm text-neutral-500">{{ formatDate(content.publishedAt) }}</span>
-        <FavoriteButton :content="content" :with-label="false" />
+        <FavoriteButton v-if="!content.locked" :content="content" :with-label="false" />
       </ItemFooter>
     </Item>
   </component>
