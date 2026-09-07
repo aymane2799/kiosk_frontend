@@ -20,15 +20,26 @@ const router = createRouter({
         { path: '', name: ROUTE_NAMES.tenantHome, component: TenantLandingPage },
         {
           path: 'catalog',
-          name: ROUTE_NAMES.tenantCatalog,
           meta: { requiresAuth: true },
-          component: () => import('@/features/content/pages/CatalogPage.vue'),
+          children: [
+            {
+              path: '',
+              name: ROUTE_NAMES.tenantCatalog,
+              component: () => import('@/features/content/pages/CatalogPage.vue'),
+            },
+            {
+              path: 'catalog/:contentId',
+              name: ROUTE_NAMES.tenentContentDetail,
+              component: () => import('@/features/content/pages/ContentDetailPage.vue'),
+            },
+          ],
         },
+
         {
-          path: 'catalog/:contentId',
-          name: ROUTE_NAMES.tenentContentDetail,
+          path: 'favorites',
+          name: ROUTE_NAMES.tenantFavorites,
           meta: { requiresAuth: true },
-          component: () => import('@/features/content/pages/ContentDetailPage.vue'),
+          component: () => import('@/features/favorite/pages/FavoritesPage.vue'),
         },
         {
           path: 'plans',

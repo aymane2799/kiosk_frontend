@@ -20,7 +20,7 @@ const { data: config, isPending, isError, error } = useTenantConfig(slug)
 
 const navLinks = computed(() => [
   { label: 'Catalog', to: { name: ROUTE_NAMES.tenantCatalog } },
-  { label: 'Favoris', to: { name: '' } },
+  { label: 'Favoris', to: { name: ROUTE_NAMES.tenantFavorites } },
 ])
 
 const isAuthenticated = computed(
@@ -66,7 +66,8 @@ const themeVariables = computed(() => tenantThemeVariables(tenantStore.config))
               v-for="(item, index) in navLinks"
               :key="index"
               :to="item.to"
-              class="text-white text-semibold"
+              class="text-white/75 text-semibold"
+              active-class="!text-white"
             >
               {{ item.label }}
             </RouterLink>

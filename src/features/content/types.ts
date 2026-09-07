@@ -8,6 +8,7 @@ export interface ContentSummaryResponse {
   tier: ContentTier
   publishedAt: IsoInstant | null
   locked: boolean
+  favorite: boolean
 }
 
 export interface ContentDetailResponse {
@@ -18,4 +19,5 @@ export interface ContentDetailResponse {
   category: string | null
   tier: ContentTier
   publishedAt: IsoInstant | null
+  favorite: boolean
 }

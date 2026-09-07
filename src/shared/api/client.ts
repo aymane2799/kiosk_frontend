@@ -30,6 +30,6 @@ export const http = {
     apiClient.post<T>(url, body, config).then((res) => res.data),
   put: <T>(url: string, body?: unknown, config?: AxiosRequestConfig) =>
     apiClient.put<T>(url, body, config).then((res) => res.data),
-  del: <T>(url: string, config?: AxiosRequestConfig) =>
+  delete: <T>(url: string, config?: AxiosRequestConfig) =>
     apiClient.delete<T>(url, config).then((res) => res.data),
 }

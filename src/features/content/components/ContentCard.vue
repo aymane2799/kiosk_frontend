@@ -9,6 +9,7 @@ import {
   ItemTitle,
 } from '@/components/ui/item'
 import { type ContentSummaryResponse } from '@/features/content/types'
+import FavoriteButton from '@/features/favorite/components/FavoriteButton.vue'
 import { formatDate } from '@/lib/dates'
 import { ROUTE_NAMES } from '@/router/route-names'
 import { useTenantStore } from '@/stores/tenant'
@@ -44,7 +45,8 @@ const tenantStore = useTenantStore()
       </ItemContent>
 
       <ItemFooter>
-        Publié le <span class="font-bold">{{ formatDate(content.publishedAt) }}</span>
+        <span class="text-sm text-neutral-500">{{ formatDate(content.publishedAt) }}</span>
+        <FavoriteButton :content="content" :with-label="false" />
       </ItemFooter>
     </Item>
   </component>

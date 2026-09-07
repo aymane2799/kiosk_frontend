@@ -6,12 +6,13 @@ import { useContentDetail } from '../queries'
 import { ROUTE_NAMES } from '@/router/route-names'
 import { Skeleton } from '@/components/ui/skeleton'
 import Badge from '@/components/ui/badge/Badge.vue'
-import { ArrowLeft, Bookmark, Lock, XCircle } from '@lucide/vue'
+import { ArrowLeft, Lock, XCircle } from '@lucide/vue'
 import { formatDate } from '@/lib/dates'
 import Separator from '@/components/ui/separator/Separator.vue'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import FavoriteButton from '@/features/favorite/components/FavoriteButton.vue'
 
 const route = useRoute()
 const tenantStore = useTenantStore()
@@ -94,10 +95,7 @@ const isNotFound = computed(() => error.value?.code === 'NOT_FOUND')
           Publié le <span class="font-bold">{{ formatDate(content.publishedAt) }}</span>
         </span>
 
-        <Button class="flex gap-2 items-center" size="sm" variant="ghost" type="button">
-          <Bookmark />
-          Ajouter aux favoris
-        </Button>
+        <FavoriteButton :content="content" />
       </div>
 
       <Separator />
