@@ -4,7 +4,7 @@ import AuthLayout from '@/layouts/AuthLayout.vue'
 import DefaultTenantLayout from '@/layouts/DefaultTenantLayout.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { ROUTE_NAMES } from './route-names'
-import { installAuthGuards } from './gurads'
+import { installAuthGuards } from './guards'
 import AdminAuthLayout from '@/layouts/AdminAuthLayout.vue'
 
 const router = createRouter({
