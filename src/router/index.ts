@@ -3,24 +3,29 @@ import AdminLayout from '@/layouts/AdminLayout.vue'
 import AuthLayout from '@/layouts/AuthLayout.vue'
 import DefaultTenantLayout from '@/layouts/DefaultTenantLayout.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import { ROUTE_NAMES } from './route-names'
+import { installAuthGuards } from './gurads'
+import AdminAuthLayout from '@/layouts/AdminAuthLayout.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/', redirect: { name: 'admin-tenants' } },
+    { path: '/', redirect: { name: ROUTE_NAMES.adminTenants } },
 
     {
       path: '/t/:tenantSlug',
       component: DefaultTenantLayout,
-      children: [{ path: '', name: 'tenant-home', component: TenantLandingPage }],
+      meta: { identity: 'tenant' },
+      children: [{ path: '', name: ROUTE_NAMES.tenantHome, component: TenantLandingPage }],
     },
     {
       path: '/t/:tenantSlug/login',
       component: AuthLayout,
+      meta: { identity: 'tenant' },
       children: [
         {
           path: '',
-          name: 'tenant-login',
+          name: ROUTE_NAMES.tenantLogin,
           component: () => import('@/features/auth/pages/TenantLoginPage.vue'),
         },
       ],
@@ -29,11 +34,12 @@ const router = createRouter({
     {
       path: '/admin',
       component: AdminLayout,
+      meta: { identity: 'admin', requiresAuth: true },
       children: [
-        { path: '', name: 'admin-home', redirect: { name: 'admin-tenants' } },
+        { path: '', name: ROUTE_NAMES.adminHome, redirect: { name: 'admin-tenants' } },
         {
           path: 'tenants',
-          name: 'admin-tenants',
+          name: ROUTE_NAMES.adminTenants,
           component: () => import('@/features/admin/pages/AdminTenantsPage.vue'),
         },
       ],
@@ -41,16 +47,19 @@ const router = createRouter({
 
     {
       path: '/admin/login',
-      component: AuthLayout,
+      component: AdminAuthLayout,
+      meta: { identity: 'admin' },
       children: [
         {
           path: '',
-          name: 'admin-login',
+          name: ROUTE_NAMES.adminLogin,
           component: () => import('@/features/auth/pages/AdminLoginPage.vue'),
         },
       ],
     },
   ],
 })
+
+installAuthGuards(router)
 
 export default router

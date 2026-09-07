@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { type AxiosRequestConfig } from 'axios'
 import { audienceForUrl, getToken } from './tokens'
 import { env } from '../config/env'
 
@@ -21,3 +21,15 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => Promise.reject(error),
 )
+
+/** Thin typed helpers — return the response body directly. */
+export const http = {
+  get: <T>(url: string, config?: AxiosRequestConfig) =>
+    apiClient.get<T>(url, config).then((res) => res.data),
+  post: <T>(url: string, body?: unknown, config?: AxiosRequestConfig) =>
+    apiClient.post<T>(url, body, config).then((res) => res.data),
+  put: <T>(url: string, body?: unknown, config?: AxiosRequestConfig) =>
+    apiClient.put<T>(url, body, config).then((res) => res.data),
+  del: <T>(url: string, config?: AxiosRequestConfig) =>
+    apiClient.delete<T>(url, config).then((res) => res.data),
+}

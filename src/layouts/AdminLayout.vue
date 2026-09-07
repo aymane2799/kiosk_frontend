@@ -1,8 +1,19 @@
 <script setup lang="ts">
 import Logo from '@/components/Logo.vue'
 import { Button } from '@/components/ui/button'
+import { ROUTE_NAMES } from '@/router/route-names'
+import { useAuthStore } from '@/stores/auth'
+import { useRouter } from 'vue-router'
 
 const navLinks = [{ label: 'Tenants', to: { name: 'admin-tenants' } }]
+
+const router = useRouter()
+const auth = useAuthStore()
+
+function logout() {
+  auth.clear('admin')
+  void router.push({ name: ROUTE_NAMES.adminLogin })
+}
 </script>
 
 <template>
@@ -13,7 +24,7 @@ const navLinks = [{ label: 'Tenants', to: { name: 'admin-tenants' } }]
 
         <nav class="flex gap-4 items-center">
           <!-- TODO: show navigation when user is authenticated -->
-          <template v-if="false">
+          <template v-if="auth.isAdminAuthenticated">
             <RouterLink
               v-for="(item, index) in navLinks"
               :key="index"
@@ -22,9 +33,12 @@ const navLinks = [{ label: 'Tenants', to: { name: 'admin-tenants' } }]
             >
               {{ item.label }}
             </RouterLink>
+            <Button @click="logout" role="button" variant="destructive"> Se déconnecter </Button>
           </template>
           <template v-else>
-            <Button variant="secondary">Se connecter</Button>
+            <RouterLink custom v-slot="{ navigate }" :to="{ name: ROUTE_NAMES.adminLogin }">
+              <Button @click="navigate" role="link" variant="secondary"> Se connecter </Button>
+            </RouterLink>
           </template>
         </nav>
       </div>

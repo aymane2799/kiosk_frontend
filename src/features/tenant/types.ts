@@ -1,11 +1,4 @@
-import type {
-  ContentTier,
-  HexColor,
-  IsoInstant,
-  MinorUnits,
-  SubscriptionStatus,
-  Uuid,
-} from '@/shared/types'
+import type { HexColor, IsoInstant, Uuid } from '@/shared/types'
 
 export interface TenantPublicResponse {
   slug: string

@@ -1,7 +1,6 @@
-import { apiClient } from '@/shared/api'
+import { http } from '@/shared/api/client'
+import type { TenantPublicResponse } from './types'
 
-export async function getTenantConfig(slug: string) {
-  const response = await apiClient.get(`tenants/${slug}/config`)
-
-  return response.data
+export async function getTenantConfig(slug: string): Promise<TenantPublicResponse> {
+  return await http.get<TenantPublicResponse>(`tenants/${slug}/config`)
 }

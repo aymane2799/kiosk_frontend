@@ -1,16 +1,31 @@
 <script setup lang="ts">
+import { Button } from '@/components/ui/button'
 import { useTenantConfig } from '@/features/tenant/queries'
 import { resolveTenant } from '@/features/tenant/resolvers'
 import { tenantThemeVariables } from '@/features/tenant/theme'
+import { ROUTE_NAMES } from '@/router/route-names'
+import { useAuthStore } from '@/stores/auth'
 import { useTenantStore } from '@/stores/tenant'
 import { computed, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
+const router = useRouter()
+
 const tenantStore = useTenantStore()
+const authStore = useAuthStore()
 
 const slug = computed(() => resolveTenant(route))
 const { data: config, isPending, isError, error } = useTenantConfig(slug)
+
+const isAuthenticated = computed(
+  () => authStore.isUserAuthenticated && slug.value == authStore.tenantSlug,
+)
+
+function logout() {
+  authStore.clear('tenant')
+  void router.push({ name: ROUTE_NAMES.tenantLogin, params: { tenantSlug: slug.value } })
+}
 
 watch(slug, (newSlug) => tenantStore.setSlug(newSlug), { immediate: true })
 watch(
@@ -38,7 +53,6 @@ const themeVariables = computed(() => tenantThemeVariables(tenantStore.config))
               :alt="tenantStore.name ?? 'Tenant Logo'"
               class="h-8 w-auto object-contain"
             />
-            <span class="text-md font-semibold text-neutral-300"> | KioskBridge </span>
           </template>
 
           <!-- show navigation when user is authenticated -->
@@ -46,6 +60,16 @@ const themeVariables = computed(() => tenantThemeVariables(tenantStore.config))
             <RouterLink to="">Acceuil</RouterLink>
           </nav>
         </div>
+
+        <Button
+          v-if="isAuthenticated"
+          type="button"
+          @click="logout"
+          variant="destructive"
+          class="ml-auto"
+        >
+          Se déconnecter
+        </Button>
       </div>
     </header>
 
