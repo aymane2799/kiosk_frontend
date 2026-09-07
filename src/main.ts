@@ -5,9 +5,8 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
-import { VueQueryPlugin } from '@tanstack/vue-query'
-import { useAuthStore } from './stores/auth.ts'
-import { setTokenGetter } from './shared/api/tokens.ts'
+import { MutationCache, QueryCache, VueQueryPlugin } from '@tanstack/vue-query'
+import { installAuth } from './features/auth/installAuth.ts'
 
 const app = createApp(App)
 
@@ -16,12 +15,12 @@ const pinia = createPinia()
 app.use(pinia)
 app.use(router)
 
-const auth = useAuthStore(pinia)
-
-setTokenGetter((audience) => auth.getTokenFor(audience))
+const { onError } = installAuth(router)
 
 app.use(VueQueryPlugin, {
   queryClientConfig: {
+    queryCache: new QueryCache({ onError }),
+    mutationCache: new MutationCache({ onError }),
     defaultOptions: {
       queries: {
         retry: 1,

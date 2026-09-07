@@ -6,7 +6,7 @@ import { useAuthStore } from '@/stores/auth'
 
 declare module 'vue-router' {
   interface RouteMeta {
-    identity: ApiAudience
+    identity?: ApiAudience
     requiresAuth?: boolean
   }
 }

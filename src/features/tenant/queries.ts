@@ -3,11 +3,12 @@ import { computed, toValue, type MaybeRefOrGetter } from 'vue'
 import type { TenantPublicResponse } from './types'
 import { tenantKeys } from './query-keys'
 import { getTenantConfig } from './api'
+import type { ApiError } from '@/shared/types/api-error'
 
 export function useTenantConfig(slug: MaybeRefOrGetter<string | null | undefined>) {
   const slugValue = computed(() => toValue(slug) ?? '')
 
-  return useQuery<TenantPublicResponse>(
+  return useQuery<TenantPublicResponse, ApiError>(
     computed(() => ({
       queryKey: tenantKeys.config(slugValue.value),
       queryFn: () => getTenantConfig(slugValue.value),

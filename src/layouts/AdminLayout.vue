@@ -5,7 +5,7 @@ import { ROUTE_NAMES } from '@/router/route-names'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
 
-const navLinks = [{ label: 'Tenants', to: { name: 'admin-tenants' } }]
+const navLinks = [{ label: 'Tenants', to: { name: ROUTE_NAMES.adminTenants } }]
 
 const router = useRouter()
 const auth = useAuthStore()

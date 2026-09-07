@@ -18,6 +18,11 @@ const authStore = useAuthStore()
 const slug = computed(() => resolveTenant(route))
 const { data: config, isPending, isError, error } = useTenantConfig(slug)
 
+const navLinks = computed(() => [
+  { label: 'Catalog', to: { name: ROUTE_NAMES.tenantCatalog } },
+  { label: 'Favoris', to: { name: '' } },
+])
+
 const isAuthenticated = computed(
   () => authStore.isUserAuthenticated && slug.value == authStore.tenantSlug,
 )
@@ -43,7 +48,7 @@ const themeVariables = computed(() => tenantThemeVariables(tenantStore.config))
 
 <template>
   <div :style="themeVariables" class="flex min-h-screen flex-col">
-    <header class="flex justify-between bg-brand-primary border-b border-brand-primary">
+    <header class="flex justify-between bg-primary">
       <div class="container mx-auto flex items-center gap-8 px-6 py-3">
         <div class="flex items-center gap-4">
           <template v-if="tenantStore.isTenantResolved">
@@ -56,8 +61,15 @@ const themeVariables = computed(() => tenantThemeVariables(tenantStore.config))
           </template>
 
           <!-- show navigation when user is authenticated -->
-          <nav v-if="false" class="flex gap-4 items-center ml-4">
-            <RouterLink to="">Acceuil</RouterLink>
+          <nav v-if="isAuthenticated" class="flex gap-4 items-center ml-4">
+            <RouterLink
+              v-for="(item, index) in navLinks"
+              :key="index"
+              :to="item.to"
+              class="text-white text-semibold"
+            >
+              {{ item.label }}
+            </RouterLink>
           </nav>
         </div>
 
@@ -84,7 +96,7 @@ const themeVariables = computed(() => tenantThemeVariables(tenantStore.config))
       <RouterView />
     </main>
 
-    <footer class="border-t border-brand-primary">
+    <footer class="border-t border-primary">
       <div class="container mx-auto px-6 py-4 text-xs text-neutral-500">
         @ Copyright KioskBridge
       </div>

@@ -16,7 +16,26 @@ const router = createRouter({
       path: '/t/:tenantSlug',
       component: DefaultTenantLayout,
       meta: { identity: 'tenant' },
-      children: [{ path: '', name: ROUTE_NAMES.tenantHome, component: TenantLandingPage }],
+      children: [
+        { path: '', name: ROUTE_NAMES.tenantHome, component: TenantLandingPage },
+        {
+          path: 'catalog',
+          name: ROUTE_NAMES.tenantCatalog,
+          meta: { requiresAuth: true },
+          component: () => import('@/features/content/pages/CatalogPage.vue'),
+        },
+        {
+          path: 'catalog/:contentId',
+          name: ROUTE_NAMES.tenentContentDetail,
+          meta: { requiresAuth: true },
+          component: () => import('@/features/content/pages/ContentDetailPage.vue'),
+        },
+        {
+          path: 'plans',
+          name: ROUTE_NAMES.tenantPlans,
+          component: () => import('@/features/subscription/pages/TenantPlansPage.vue'),
+        },
+      ],
     },
     {
       path: '/t/:tenantSlug/login',

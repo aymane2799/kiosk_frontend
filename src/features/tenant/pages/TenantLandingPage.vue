@@ -15,7 +15,7 @@ const isAuthenticated = computed(
 
 <template>
   <div class="flex flex-col gap-4 py-8">
-    <p class="text-brand-primary">{{ tenantStore.name }}</p>
+    <p class="text-primary">{{ tenantStore.name }}</p>
     <h1 class="text-4xl font-semibold max-w-md mt-3">
       Toute la presse que vous cherchez en un seul endroit
     </h1>
@@ -29,12 +29,18 @@ const isAuthenticated = computed(
         v-if="!isAuthenticated"
         custom
         v-slot="{ navigate }"
-        :to="{ name: ROUTE_NAMES.tenantLogin, params: { tenantId: tenantStore.slug ?? '' } }"
+        :to="{ name: ROUTE_NAMES.tenantLogin, params: { tenantSlug: tenantStore.slug ?? '' } }"
       >
         <Button @click="navigate" role="link"> Se connecter </Button>
       </RouterLink>
-
-      <p v-else>Vous etes connecté</p>
+      <RouterLink
+        v-else
+        custom
+        v-slot="{ navigate }"
+        :to="{ name: ROUTE_NAMES.tenantCatalog, params: { tenantSlug: tenantStore.slug ?? '' } }"
+      >
+        <Button @click="navigate" role="link"> Accéder au catalog </Button>
+      </RouterLink>
     </div>
   </div>
 </template>
