@@ -24,7 +24,10 @@ const label = computed(() =>
   props.content.favorite ? 'Retirer des favoris' : 'Ajouter aux favoris',
 )
 
-function toggle() {
+function toggle(e: PointerEvent) {
+  e.preventDefault()
+  e.stopPropagation()
+
   if (isLoading.value) return
   else if (props.content.favorite) remove.mutate(props.content.id)
   else add.mutate({ contentId: props.content.id })
@@ -39,7 +42,7 @@ function toggle() {
     :title="label"
     :variant="props.content.favorite ? 'default' : 'ghost'"
     :disabled="isLoading"
-    @click.prevent="toggle"
+    @click="toggle"
   >
     <Bookmark :class="cn({ 'fill-current': props.content.favorite })" />
     <span v-if="props.withLabel">

@@ -13,7 +13,7 @@ export function useAddFavorite() {
   return useMutation<ContentSummaryResponse, ApiError, FavoriteRequest>({
     mutationFn: (body) => addFavorite(body),
     onSuccess: (_, body) => {
-      queryClient.invalidateQueries({ queryKey: favoriteKeys.list() })
+      queryClient.invalidateQueries({ queryKey: favoriteKeys.all })
       queryClient.invalidateQueries({ queryKey: contentKeys.all })
     },
   })
@@ -25,7 +25,7 @@ export function useremoveFavorite() {
   return useMutation<void, ApiError, Uuid>({
     mutationFn: (id) => removeFavorite(id),
     onSuccess: (_, id) => {
-      queryClient.invalidateQueries({ queryKey: favoriteKeys.list() })
+      queryClient.invalidateQueries({ queryKey: favoriteKeys.all })
       queryClient.invalidateQueries({ queryKey: contentKeys.all })
     },
   })
