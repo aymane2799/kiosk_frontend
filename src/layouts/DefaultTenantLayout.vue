@@ -79,6 +79,7 @@ const themeVariables = computed(() => tenantThemeVariables(tenantStore.config))
           @click="logout"
           variant="destructive"
           class="ml-auto"
+          size="sm"
         >
           Se déconnecter
         </Button>

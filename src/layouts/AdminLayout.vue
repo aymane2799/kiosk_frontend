@@ -33,11 +33,15 @@ function logout() {
             >
               {{ item.label }}
             </RouterLink>
-            <Button @click="logout" role="button" variant="destructive"> Se déconnecter </Button>
+            <Button @click="logout" role="button" variant="destructive" size="sm">
+              Se déconnecter
+            </Button>
           </template>
           <template v-else>
             <RouterLink custom v-slot="{ navigate }" :to="{ name: ROUTE_NAMES.adminLogin }">
-              <Button @click="navigate" role="link" variant="secondary"> Se connecter </Button>
+              <Button @click="navigate" role="link" variant="secondary" size="sm">
+                Se connecter
+              </Button>
             </RouterLink>
           </template>
         </nav>
