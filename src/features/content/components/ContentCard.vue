@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/item'
 import { type ContentSummaryResponse } from '@/features/content/types'
 import FavoriteButton from '@/features/favorite/components/FavoriteButton.vue'
-import { formatDate } from '@/lib/dates'
+import { formatDate } from '@/lib/format'
 import { ROUTE_NAMES } from '@/router/route-names'
 import { useTenantStore } from '@/stores/tenant'
 import { Lock } from '@lucide/vue'

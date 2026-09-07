@@ -29,11 +29,11 @@ const { data, isPending, isError } = useCatalog()
     <Alert v-else-if="isError" class="mt-6" variant="destructive">
       <XCircle />
       <AlertTitle>
-        Impossible de charger le catalog pour le moment. Veullez réssayer plus tard
+        Impossible de charger le catalog pour le moment. Veuillez réssayer plus tard
       </AlertTitle>
     </Alert>
 
-    <Empty v-else-if="!data || data?.length === 0" class="mt-6 h-full">
+    <Empty v-else-if="!data || data?.length === 0" class="mt-6 h-full bg-white shadow-sm">
       <EmptyHeader>
         <EmptyMedia variant="icon">
           <List />

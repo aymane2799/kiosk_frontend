@@ -7,7 +7,7 @@ import { ROUTE_NAMES } from '@/router/route-names'
 import { Skeleton } from '@/components/ui/skeleton'
 import Badge from '@/components/ui/badge/Badge.vue'
 import { ArrowLeft, Lock, XCircle } from '@lucide/vue'
-import { formatDate } from '@/lib/dates'
+import { formatDate } from '@/lib/format'
 import Separator from '@/components/ui/separator/Separator.vue'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -79,7 +79,7 @@ const isNotFound = computed(() => error.value?.code === 'NOT_FOUND')
     <Alert v-else-if="isError" class="mt-6" variant="destructive">
       <XCircle />
       <AlertTitle>
-        Impossible de charger cette publication pour le moment. Veullez réssayer plus tard
+        Impossible de charger cette publication pour le moment. Veuillez réssayer plus tard
       </AlertTitle>
     </Alert>
 
